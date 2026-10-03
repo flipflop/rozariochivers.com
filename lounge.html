@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>The Skyport of Tomorrow · Technology Facts and Figures, 2026</title>
+  <meta name="description" content="A walkable 1950s skyport lounge in 3D: eight monitors, one per chapter of Technology Facts and Figures, 2026.">
+  <meta name="theme-color" content="#F1ECDF">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23161616'/%3E%3Ctext x='16' y='24' font-family='Arial Narrow,sans-serif' font-weight='700' font-size='22' text-anchor='middle' fill='none' stroke='%23F1ECDF' stroke-width='1.2'%3ERC%3C/text%3E%3C/svg%3E">
+  <link rel="preload" href="assets/fonts/Marcellus-400.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/Oswald.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="css/fonts.css?v=20261003">
+  <link rel="stylesheet" href="css/tokens.css?v=20261003">
+  <link rel="stylesheet" href="css/base.css?v=20261003">
+  <link rel="stylesheet" href="css/components.css?v=20261003">
+  <link rel="stylesheet" href="css/lounge.css?v=20261003">
+  <script type="importmap">{"imports":{"three":"./vendor/three/three.module.min.js","three/addons/":"./vendor/three/addons/"}}</script>
+  <script>document.documentElement.classList.add('js')</script>
+  <script type="module" src="js/lounge.js?v=20261002c"></script>
+</head>
+<body class="lounge">
+  <header class="masthead" id="mast">
+    <div class="masthead__in">
+      <a class="masthead__brand" href="index.html">R. Chivers · Facts &amp; Figures</a>
+      <nav aria-label="Site"><ul class="masthead__nav">
+        <li class="keep"><a href="index.html#chapters">All chapters</a></li>
+        <li class="keep"><a href="index.html">Home</a></li>
+      </ul></nav>
+    </div>
+  </header>
+  <main id="fallback" class="lounge-list" hidden>
+    <noscript><p>The Skyport needs JavaScript. All chapters are listed on the <a href="index.html#chapters">contents page</a>.</p></noscript>
+  </main>
+  <div id="stage" class="stage" aria-label="3D skyport lounge" role="application"></div>
+  <div id="loading" class="loading is-done" role="status" aria-live="polite">
+    <p class="loading__kicker">Skyport of Tomorrow · Gate 0</p>
+    <div class="loading__flaps" id="loadingFlaps"></div>
+    <p class="loading__sub">Please wait while your robot is readied</p>
+  </div>
+  <div id="hud" class="hud" hidden></div>
+  <div class="halftone" aria-hidden="true"></div>
+</body>
+</html>

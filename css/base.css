@@ -1,0 +1,58 @@
+/**
+ * Base — reset, paper stock, type defaults. Consumes tokens only.
+ * Paper grain is an feTurbulence SVG as a fixed overlay at low opacity.
+ */
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; scroll-behavior: smooth; }
+html, body { overflow-x: clip; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 400 var(--t-md)/1.6 var(--f-body);
+  font-kerning: normal;
+  hanging-punctuation: first last;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {               /* paper grain */
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 1000;
+  opacity: .28;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .45 0 0 0 0 .4 0 0 0 0 .3 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+img, svg, canvas { display: block; max-width: 100%; }
+img { height: auto; }
+h1, h2, h3, h4 { margin: 0; font-weight: 400; line-height: 1.05; text-wrap: balance; }
+p { margin: 0 0 1em; text-wrap: pretty; }
+ul, ol { margin: 0; padding: 0; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+button { font: inherit; color: inherit; }
+:focus-visible { outline: var(--focus); outline-offset: 3px; }
+
+.skip-link {
+  position: absolute; left: var(--s-4); top: -60px; z-index: 2000;
+  background: var(--ink); color: var(--paper); padding: var(--s-2) var(--s-4);
+  font: 500 var(--t-sm)/1 var(--f-mono); text-decoration: none;
+}
+.skip-link:focus { top: var(--s-4); }
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Type voices */
+.caps { font-family: var(--f-cond); font-weight: 500; text-transform: uppercase; letter-spacing: var(--caps-track); }
+.mono { font-family: var(--f-mono); font-size: var(--t-xs); letter-spacing: .06em; }
+.display { font-family: var(--f-display); line-height: .98; letter-spacing: .005em; }
+
+/* Reveal: gated by .js so nothing hides without scripts */
+.js .reveal { opacity: 0; transform: translateY(16px); transition: opacity var(--dur) var(--ease), transform var(--dur) var(--ease); transition-delay: calc(var(--i, 0) * 70ms); }
+.js .reveal.is-in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) {
+  .js .reveal { opacity: 1; transform: none; transition: none; }
+  *, *::before, *::after { animation-duration: .001ms !important; animation-iteration-count: 1 !important; transition-duration: .001ms !important; }
+}

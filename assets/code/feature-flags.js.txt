@@ -1,0 +1,90 @@
+/**
+ * @module Feature Flag version 0.5
+ * @author Rozario Chivers
+ * @Copyright August 2018 Rozario Chivers
+ * @return {object} - exports:
+ load,
+ getflagRegistry,
+ isActive
+ */
+
+let FEATURE_FLAGS = (() => {
+
+    let flagRegistry = {}; // registry object for event name validation
+    let responseStatus = 0;
+
+    /**
+     * Utility method to load properties file and invoke
+     * @param {flagFile} optional ES6 Template Literal of key/values
+     * addFlagsToRegistry()
+     * @return {undefined} - no return value defined
+     */
+
+    let load = (flagsFile) => {
+        if (flagsFile) {
+            addFlagsToRegistry(flagsFile);
+        }
+    };
+
+    /**
+     * Utility method to parse properties file and create registry
+     * Entries are deduped and simple validation checks for duplicates
+     * @param {string} flags - CRLF delimeted property file name and values
+     * @return {undefined} - no return value defined
+     */
+    let addFlagsToRegistry = (flags) => {
+        // convert template string to an array
+        // remove line feeds and empty strings and # comments
+        let registryList = flags
+            .split('\n')
+            .filter(function(str){ return str !== '' && !str.match('#') });
+
+        let registryMap = registryList.map(function(item) {
+            // convert template string keys into
+            // camelCase event object key and hyphen delimeted value
+            // remove tabs, spaces and CRLF
+
+            let registryKey = item.substring(0, item.indexOf('=')).trim();
+            let registryValueStr = item.substring(
+                item.indexOf('=') + 1, item.length
+            ).trim();
+            // convert string to boolean
+            let registryValue = !!registryValueStr.match('true');
+
+            // populate registry object keys and values
+            flagRegistry[ registryKey ] = registryValue;
+
+            /* Now validate property file content */
+
+            // flatten Registry List (with ommitted comments)
+            let registryListStr = registryList.join(',');
+        });
+    };
+
+    /**
+     * List all current registered feature flags
+     * @return {object} - list of registered names
+     */
+    let getflagRegistry = () => {
+
+        return flagRegistry;
+    };
+
+    /**
+     * A check for enabled feature flags
+     * @return {boolean} - enabled, disabled or undefined
+     */
+    let isActive = (featureName) => {
+
+        return flagRegistry[featureName];
+    };
+
+    return {
+        load,
+        getflagRegistry,
+        isActive
+    };
+
+})(); // FEATURE_FLAGS
+
+export default FEATURE_FLAGS;

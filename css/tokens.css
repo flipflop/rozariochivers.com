@@ -1,0 +1,70 @@
+/**
+ * Design tokens — "Technology Facts and Figures, 2026".
+ * Print-limited system: inks, not colours (SPEC §2). Paper, ink, one sky-blue
+ * spot with a darker over-print, one sparing signal red for live marks only.
+ * There is deliberately no dark theme: the almanac is a printed object.
+ * The one dark band (Current Command) uses its own --band locals.
+ */
+:root {
+  /* Inks */
+  --paper: #F1ECDF;
+  --paper-2: #E8E1CF;      /* tinted stock for inset panels */
+  --paper-3: #DCD3BD;      /* rules on paper */
+  --ink: #161616;
+  --ink-2: #3A3833;        /* secondary text on paper, 10:1 */
+  --ink-3: #5E5A50;        /* meta text on paper, 6:1 */
+  --blue: #7DB6D8;         /* spot fill — never body text on paper */
+  --blue-deep: #4F8DB3;    /* over-print */
+  --red: #C8452E;          /* live / interactive marks only */
+
+  /* Band locals (the ink band is ink in every context) */
+  --band: #161616;
+  --band-2: #232220;
+  --on-band: #F1ECDF;
+  --on-band-2: #BDB6A6;
+  --band-rule: #3B3934;
+
+  /* Registration offset for blue fills vs ink line */
+  --mis-x: 4px;
+  --mis-y: -3px;
+
+  /* Type */
+  --f-display: 'Marcellus', 'Times New Roman', serif;
+  --f-cond: 'Oswald', 'Arial Narrow', sans-serif;
+  --f-body: 'Jost', 'Futura', 'Century Gothic', sans-serif;
+  --f-mono: 'IBM Plex Mono', ui-monospace, Menlo, monospace;
+
+  --t-xs: 0.75rem;
+  --t-sm: 0.875rem;
+  --t-md: 1.0625rem;
+  --t-lg: clamp(1.2rem, 1rem + 0.6vw, 1.45rem);
+  --t-xl: clamp(1.6rem, 1.2rem + 1.4vw, 2.4rem);
+  --t-2xl: clamp(2.2rem, 1.4rem + 3vw, 4rem);
+  --t-3xl: clamp(2.8rem, 1.2rem + 6vw, 7.2rem);
+
+  --caps-track: 0.14em;
+  --wide-track: 0.28em;
+
+  /* Space */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px;
+  --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px;
+  --gutter: clamp(16px, 4vw, 56px);
+  --page-max: 1240px;
+  --measure: 62ch;
+
+  /* Lines */
+  --rule: 1px solid var(--ink);
+  --rule-soft: 1px solid var(--paper-3);
+  --chamfer: 18px;
+
+  /* Motion */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --dur: 600ms;
+
+  /* Halftone screens (radial-gradient dot patterns, the only "gradients") */
+  --halftone-blue: radial-gradient(circle at 50% 50%, var(--blue-deep) 0 1.3px, transparent 1.6px) 0 0 / 6px 6px;
+  --halftone-ink: radial-gradient(circle at 50% 50%, var(--ink) 0 1px, transparent 1.3px) 0 0 / 5px 5px;
+  --halftone-paper: radial-gradient(circle at 50% 50%, rgba(241,236,223,.35) 0 1px, transparent 1.3px) 0 0 / 5px 5px;
+
+  --focus: 3px solid var(--red);
+}
