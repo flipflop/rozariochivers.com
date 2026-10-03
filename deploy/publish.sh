@@ -12,11 +12,13 @@ ACCT=$(aws sts get-caller-identity --profile $PROFILE --query Account --output t
 
 EXCL=(--exclude ".git/*" --exclude ".gitignore" --exclude "docs/*" --exclude "deploy/*" --exclude "SPEC.md" \
       --exclude "*.py" --exclude "*.DS_Store" --exclude "shot.png" --exclude "assets/candidates/*" \
-      --exclude "assets/photos/*-src.png" --exclude "*.md")
+      --exclude "assets/photos/*-src.png" --exclude "*.md" --exclude "deploy/*")
 
 # 1. everything except HTML: cache for a day (most JS/CSS is version-tagged with ?v=)
 aws s3 sync . "s3://$BUCKET" --profile $PROFILE --delete "${EXCL[@]}" --exclude "*.html" \
   --cache-control "public, max-age=86400"
+# 1b. correct content types for the manifest
+aws s3 cp site.webmanifest "s3://$BUCKET/site.webmanifest" --profile $PROFILE --content-type "application/manifest+json" --cache-control "public, max-age=86400" >/dev/null
 # 2. HTML: always revalidate so new versions appear immediately
 aws s3 sync . "s3://$BUCKET" --profile $PROFILE "${EXCL[@]}" --exclude "*" --include "*.html" \
   --cache-control "no-cache" --content-type "text/html; charset=utf-8"

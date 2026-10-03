@@ -84,6 +84,7 @@ function render() {
   const p = PROJECTS.find((x) => x.slug === slug) || PROJECTS[0];
   document.title = `${p.n}. ${p.title} · Technology Facts and Figures, 2026`;
   document.querySelector('meta[name="description"]').setAttribute('content', p.standfirst);
+  syncMeta(document.title, p.standfirst, `https://rozariochivers.com/project.html?p=${p.slug}`);
   mount($('#main'), Article(p));
   const el = $('.specimen[data-specimen]');
   if (el) onVisible(el, () => loadSpecimen(el, p));
@@ -91,3 +92,12 @@ function render() {
 }
 
 render();
+
+/** Keep canonical, Open Graph and Twitter tags in step with the rendered page. */
+function syncMeta(title, desc, url) {
+  const set = (sel, attr, v) => { const n = document.querySelector(sel); if (n) n.setAttribute(attr, v); };
+  set('link[rel="canonical"]', 'href', url);
+  set('meta[property="og:url"]', 'content', url);
+  ['meta[property="og:title"]', 'meta[name="twitter:title"]'].forEach((s) => set(s, 'content', title));
+  ['meta[property="og:description"]', 'meta[name="twitter:description"]'].forEach((s) => set(s, 'content', desc));
+}

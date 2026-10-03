@@ -47,9 +47,9 @@ function Article(p) {
 function meta(p) {
   document.title = `${p.title} · Technology Facts and Figures, 2026`;
   document.querySelector('meta[name="description"]').setAttribute('content', p.dek);
-  const url = 'post.html?p=' + p.slug;
-  document.querySelector('link[rel="canonical"]').setAttribute('href', url);
-  const ld = { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.title, description: p.dek, datePublished: p.date, dateModified: p.date, keywords: p.tags.join(', '), mainEntityOfPage: url, author: { '@type': 'Person', name: 'Rozario Chivers' } };
+  syncMeta(document.title, p.dek, `https://rozariochivers.com/post.html?p=${p.slug}`);
+  const url = 'https://rozariochivers.com/post.html?p=' + p.slug;
+  const ld = { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: p.title, description: p.dek, datePublished: p.date, dateModified: p.date, keywords: p.tags.join(', '), mainEntityOfPage: url, author: { '@type': 'Person', name: 'Rozario Chivers', url: 'https://rozariochivers.com/' }, image: 'https://rozariochivers.com/assets/images/og-card.jpg' };
   const s = document.createElement('script'); s.type = 'application/ld+json'; s.textContent = JSON.stringify(ld);
   document.head.appendChild(s);
 }
@@ -64,3 +64,12 @@ function render() {
 }
 
 render();
+
+/** Keep canonical, Open Graph and Twitter tags in step with the rendered page. */
+function syncMeta(title, desc, url) {
+  const set = (sel, attr, v) => { const n = document.querySelector(sel); if (n) n.setAttribute(attr, v); };
+  set('link[rel="canonical"]', 'href', url);
+  set('meta[property="og:url"]', 'content', url);
+  ['meta[property="og:title"]', 'meta[name="twitter:title"]'].forEach((s) => set(s, 'content', title));
+  ['meta[property="og:description"]', 'meta[name="twitter:description"]'].forEach((s) => set(s, 'content', desc));
+}
